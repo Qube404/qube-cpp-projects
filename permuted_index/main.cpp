@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -8,9 +9,15 @@
 using namespace std;
 
 int main() {
-    vector<PermutedIndex> rotations = rotate_string("rotate this string please");
+    // Generate rotations of strings
+    vector<PermutedIndex> rotations = rotate_string("zeta charlie alpha beta");
+
+    // Sort them alphabetically
+    sort(rotations.begin(), rotations.end(), compare_permuted_indexes);
 
     for (vector<string>::size_type i = 0; i != rotations.size(); i++) {
         cout << rotations[i].line << endl;
     }
+    
+    return 0;
 }
