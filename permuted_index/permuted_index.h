@@ -9,7 +9,6 @@ struct PermutedIndex {
 std::string str_to_lower(std::string&);
 
 std::vector<PermutedIndex> rotate_string(const std::string&);
-std::vector<PermutedIndex> rotate_string(const std::vector<std::string>&);
 
 bool compare_permuted_indexes(const PermutedIndex&, const PermutedIndex&);
 

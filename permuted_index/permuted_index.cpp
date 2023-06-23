@@ -40,5 +40,5 @@ vector<PermutedIndex> rotate_string(const string& str) {
 }
 
 bool compare_permuted_indexes(const PermutedIndex &p1, const PermutedIndex &p2) {
-    return str_to_lower(p1.line1) < str_to_lower(p2.line1);
+    return str_to_lower(p1.line2) < str_to_lower(p2.line2);
 }
