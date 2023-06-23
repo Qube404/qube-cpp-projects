@@ -39,7 +39,7 @@ vector<PermutedIndex> rotate_string(const string& str) {
         working_str.clear();
         str_sz size = 0;
 
-        str_sz start = i;
+        str_sz start = i + 1;
         for (str_sz j = 0; j != s.size(); j++) {
             if (start == s.size()) {
                 start = 0;
@@ -48,9 +48,11 @@ vector<PermutedIndex> rotate_string(const string& str) {
                 working_str.clear();
             } 
 
+            cout << s[start];
             working_str += s[start];
             ++start;
         }
+        cout << endl;
 
         size = working_str.size();
         working_perm.line2 = working_str.substr(1, size);

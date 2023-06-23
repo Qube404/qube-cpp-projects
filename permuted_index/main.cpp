@@ -24,10 +24,10 @@ int main() {
     }
 
     str_sz width = 0;
-    for (perm_vec_sz i = 0; i != rotations.size(); i++) {
+    /*for (perm_vec_sz i = 0; i != rotations.size(); i++) {
         width = max_size - rotations[i].line2.size();
         cout << string(width, ' ') << rotations[i].line2 << "    " << rotations[i].line1 << endl;
-    }
+    }*/
 
     return 0;
 }
