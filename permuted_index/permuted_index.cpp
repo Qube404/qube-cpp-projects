@@ -31,7 +31,7 @@ vector<PermutedIndex> rotate_string(const string& str) {
         }
 
         working_perm.line1 = s.substr(0, i);
-        working_perm.line2 = s.substr(i, s.size());
+        working_perm.line2 = s.substr(i + 1, s.size());
 
         ret.push_back(working_perm);
     }
