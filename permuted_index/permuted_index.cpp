@@ -19,21 +19,28 @@ string str_to_lower(string s) {
 }
 
 vector<PermutedIndex> rotate_string(const string& str) {
-    string s = ' ' + str;
+    stringstream st(str);
     vector<PermutedIndex> ret;
     PermutedIndex working_perm;
 
     // Push all rotations of a string into rotations
     // vector
-    for (str_sz i = 0; i != s.size(); i++) {
-        if (s[i] != ' ') {
-            continue;
-        }
-
-        working_perm.line1 = s.substr(0, i);
-        working_perm.line2 = s.substr(i + 1, s.size());
-
+    string s = "";
+    while (getline(st, s)) {
+        working_perm.line1 = "";
+        working_perm.line2 = s;
         ret.push_back(working_perm);
+
+        for (str_sz i = 1; i != s.size(); i++) {
+            if (s[i] != ' ') {
+                continue;
+            }
+
+            working_perm.line1 = s.substr(0, i);
+            working_perm.line2 = s.substr(i + 1, s.size());
+
+            ret.push_back(working_perm);
+        }
     }
 
     return ret;

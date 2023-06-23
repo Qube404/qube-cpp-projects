@@ -10,7 +10,7 @@
 using namespace std;
 
 int main() {
-    string input = "The quick brown fox";
+    string input = "The quick brown fox\njumped over the fence";
 
     // Generate rotations of strings
     vector<PermutedIndex> rotations = rotate_string(input);
