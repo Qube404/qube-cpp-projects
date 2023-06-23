@@ -21,43 +21,18 @@ string str_to_lower(string s) {
 vector<PermutedIndex> rotate_string(const string& str) {
     string s = ' ' + str;
     vector<PermutedIndex> ret;
-
-    string working_str;
-
     PermutedIndex working_perm;
-    working_perm.line1 = str;
-    working_perm.line2 = "";
 
     // Push all rotations of a string into rotations
     // vector
-    ret.push_back(working_perm);
-    for (str_sz i = 1, spaces = 0; i != s.size(); i++) {
+    for (str_sz i = 0; i != s.size(); i++) {
         if (s[i] != ' ') {
             continue;
         }
 
-        working_str.clear();
-        str_sz size = 0;
+        working_perm.line1 = s.substr(0, i);
+        working_perm.line2 = s.substr(i, s.size());
 
-        str_sz start = i + 1;
-        for (str_sz j = 0; j != s.size(); j++) {
-            if (start == s.size()) {
-                start = 0;
-                size = working_str.size();
-                working_perm.line1 = working_str.substr(1, size);
-                working_str.clear();
-            } 
-
-            cout << s[start];
-            working_str += s[start];
-            ++start;
-        }
-        cout << endl;
-
-        size = working_str.size();
-        working_perm.line2 = working_str.substr(1, size);
-
-        ++spaces;
         ret.push_back(working_perm);
     }
 

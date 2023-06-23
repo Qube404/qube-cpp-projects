@@ -16,7 +16,7 @@ int main() {
     vector<PermutedIndex> rotations = rotate_string(input);
 
     // Sort them alphabetically
-    sort(rotations.begin(), rotations.end(), compare_permuted_indexes);
+    //sort(rotations.begin(), rotations.end(), compare_permuted_indexes);
 
     perm_vec_sz max_size = 0;
     for (perm_vec_sz i = 0; i != rotations.size(); i++) {
@@ -24,10 +24,11 @@ int main() {
     }
 
     str_sz width = 0;
-    /*for (perm_vec_sz i = 0; i != rotations.size(); i++) {
-        width = max_size - rotations[i].line2.size();
-        cout << string(width, ' ') << rotations[i].line2 << "    " << rotations[i].line1 << endl;
-    }*/
+    for (perm_vec_sz i = 0; i != rotations.size(); i++) {
+        //width = max_size - rotations[i].line2.size();
+        //cout << string(width, ' ') << rotations[i].line2 << "    " << rotations[i].line1 << endl;
+        cout << rotations[i].line2 << rotations[i].line1 << endl;
+    }
 
     return 0;
 }
