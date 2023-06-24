@@ -1,15 +1,29 @@
-#include "student_info.h"
+#include "stdexcept"
 
-using std::istream; using std::vector;
+#include "student_info.h"
+#include "median.h"
+#include "grade.h"
+
+using namespace std;
 
 bool compare(const StudentInfo& x, const StudentInfo& y) {
     return x.name < y.name;
 }
 
 istream& read(istream& is, StudentInfo& s) {
-    is >> s.name >> s.midterm >> s.final;
+    double midterm, final;
+    vector<double> homework;
 
-    read_hw(is, s.homework);
+    is >> s.name >> midterm >> final;
+
+    read_hw(is, homework);
+
+    if (homework.size() == 0) {
+        throw domain_error("student has done no homework");
+    }
+
+    s.final_grade = grade(midterm, final, median(homework));
+
     return is;
 }
 

@@ -17,7 +17,3 @@ double grade(double midterm, double final, const vector<double>& hw) {
 
     return grade(midterm, final, median(hw));
 }
-
-double grade(const StudentInfo& s) {
-    return grade(s.midterm, s.final, s.homework);
-}
