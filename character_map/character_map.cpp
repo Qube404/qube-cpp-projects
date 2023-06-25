@@ -46,8 +46,8 @@ vector<string> hcat(const vector<string>& left, const vector<string>& right) {
     str_sz width1 = width(left) + 1;
     vec_sz i = 0, j = 0;
 
+    string s;
     while (i != left.size() || j != right.size()) {
-        string s;
 
         if (i != left.size()) {
             s = left[i++];
