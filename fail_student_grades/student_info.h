@@ -15,5 +15,6 @@ bool compare(const StudentInfo&, const StudentInfo&);
 std::istream& read(std::istream&, StudentInfo&);
 std::istream& read_hw(std::istream&, std::vector<double>&);
 std::vector<StudentInfo> extract_fails(std::vector<StudentInfo>&);
+int output_students(std::ostream&, std::vector<StudentInfo>&, std::string::size_type);
 
 #endif

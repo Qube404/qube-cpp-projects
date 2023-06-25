@@ -20,25 +20,18 @@ int main() {
         maxlen = max(maxlen, record.name.size());
         students.push_back(record);
     }
+    vector<StudentInfo> fails = extract_fails(students);
     
     sort(students.begin(), students.end(), compare);
+    sort(fails.begin(), fails.end(), compare);
     
-    for (vector<StudentInfo>::size_type i = 0;
-         i != students.size(); i++) {
-        cout << students[i].name
-             << string(maxlen + 1 - students[i].name.size(), ' ');
+    cout << "Passed: " << endl;
+    output_students(cout, students, maxlen);
 
-        try {
-            double final_grade = grade(students[i]);
-            streamsize prec = cout.precision();
-            cout << setprecision(3) << final_grade
-                 << setprecision(prec);
-        } catch (domain_error e) {
-            cout << e.what();
-        }
+    cout << endl;
 
-        cout << endl;
-    }
+    cout << "Failed: " << endl;
+    output_students(cout, fails, maxlen);
 
     return 0;
 }
