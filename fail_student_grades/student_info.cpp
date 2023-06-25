@@ -35,7 +35,30 @@ istream& read_hw(istream& in, vector<double>& hw) {
     return in;
 }
 
+int extract_fails_remake(vector<StudentInfo>& s) {
+    vector<StudentInfo>::size_type i = 0;
+    vector<StudentInfo>::size_type j = 0;
+    while (i != s.size()) {
+    if (!fgrade(s[i])) {
+        s[j] = s[i];
+        ++j;
+    }
+
+        ++i;
+    }
+    
+    s.resize(j + 1);
+    return 0;
+}
+
 vector<StudentInfo> extract_fails(vector<StudentInfo>& s) {
+    int test = 1;
+
+    if (test == 1) {
+        extract_fails_remake(s);
+        return s;
+    }
+
     vector<StudentInfo> fail;
     vector<StudentInfo>::iterator iter = s.begin();
 
