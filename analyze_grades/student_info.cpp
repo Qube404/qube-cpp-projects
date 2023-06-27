@@ -30,6 +30,14 @@ istream& read_hw(istream& in, vector<double>& hw) {
     return in;
 }
 
+vector<StudentInfo> extract_fails(vector<StudentInfo>& s) {
+    vector<StudentInfo>::iterator iter = stable_partition(s.begin(), s.end(), pgrade);
+    vector<StudentInfo> fail(iter, s.end());
+    s.erase(iter, s.end());
+
+    return fail;
+}
+
 bool did_all_hw(const StudentInfo &s) {
     return ((find(s.homework.begin(), s.homework.end(), 0)) == s.homework.end());
 }

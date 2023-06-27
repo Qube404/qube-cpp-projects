@@ -8,6 +8,7 @@
 
 #include "grade.h"
 #include "student_info.h"
+#include "analyze.h"
 
 using namespace std;
 
@@ -35,6 +36,16 @@ int main() {
         cout << "Every student completed their homework" << endl;
         return -1;
     }
+
+    write_analysis(cout, "median", median_analysis, did, didnt);
+    write_analysis(cout, "average", average_analysis, did, didnt);
+    write_analysis(
+        cout, 
+        "median of homework turned in", 
+        optimistic_median_analysis, 
+        did, 
+        didnt
+    );
     
     return 0;
 }

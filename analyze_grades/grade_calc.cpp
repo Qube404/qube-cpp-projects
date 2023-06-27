@@ -1,8 +1,9 @@
+#include <numeric>
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
 
-#include "median.h"
+#include "grade_calc.h"
 
 using namespace std;
 
@@ -19,4 +20,8 @@ double median(vector<double> vec) {
     vec_sz mid = size / 2;
 
     return size % 2 == 0 ? (vec[mid] + vec[mid - 1]) / 2 : vec[mid];
+}
+
+double average(const vector<double>& v) {
+    return accumulate(v.begin(), v.end(), 0.0) / v.size();
 }
