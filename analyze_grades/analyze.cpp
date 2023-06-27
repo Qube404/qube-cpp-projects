@@ -33,26 +33,10 @@ double optimistic_median(const StudentInfo& s) {
     }
 }
 
-double median_analysis(const vector<StudentInfo>& students) {
+double analyze_students(const vector<StudentInfo>& students, double transfunc(const StudentInfo&)) {
     vector<double> grades;
 
-    transform(students.begin(), students.end(), back_inserter(grades), grade_aux);
-
-    return median(grades);
-}
-
-double average_analysis(const vector<StudentInfo>& students) {
-    vector<double> grades;
-
-    transform(students.begin(), students.end(), back_inserter(grades), average_grade);
-    
-    return median(grades);
-}
-
-double optimistic_median_analysis(const vector<StudentInfo>& students) {
-    vector<double> grades;
-
-    transform(students.begin(), students.end(), back_inserter(grades), optimistic_median);
+    transform(students.begin(), students.end(), back_inserter(grades), transfunc);
 
     return median(grades);
 }
@@ -60,10 +44,10 @@ double optimistic_median_analysis(const vector<StudentInfo>& students) {
 void write_analysis(
     ostream& out, 
     const string& name,
-    double analysis(const vector<StudentInfo>&),
+    double transfunc(const StudentInfo&),
     const vector<StudentInfo>& did,
     const vector<StudentInfo>& didnt
 ) {
-    out << name << ": median(did) == " << analysis(did) <<  
-                   ", median(didnt) == " << analysis(didnt) << endl;
+    out << name << ": median(did) == " << analyze_students(did, transfunc) <<  
+                   ", median(didnt) == " << analyze_students(didnt, transfunc) << endl;
 }

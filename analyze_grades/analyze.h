@@ -8,14 +8,12 @@ double grade_aux(const StudentInfo&);
 double average_grade(const StudentInfo&);
 double optimistic_median(const StudentInfo&);
 
-double median_analysis(const std::vector<StudentInfo>&);
-double average_analysis(const std::vector<StudentInfo>&);
-double optimistic_median_analysis(const std::vector<StudentInfo>&);
+double analyze_students(const std::vector<StudentInfo>&, double transfunc(const StudentInfo&));
 
 void write_analysis(
     std::ostream&, 
     const std::string&,
-    double analysis(const std::vector<StudentInfo>&),
+    double analysis(const StudentInfo&),
     const std::vector<StudentInfo>&,
     const std::vector<StudentInfo>&
 );
