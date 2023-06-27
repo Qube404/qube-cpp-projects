@@ -3,6 +3,7 @@
 
 #include "grade.h"
 #include "grade_calc.h"
+#include "student_info.h"
 
 using namespace std;
 
@@ -24,4 +25,8 @@ double grade(const StudentInfo& s) {
 
 bool fgrade(const StudentInfo& s) {
     return grade(s) < 60;
+}
+
+bool pgrade(const StudentInfo& s) {
+    return !fgrade(s);
 }

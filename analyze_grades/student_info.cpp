@@ -1,8 +1,9 @@
 #include <algorithm>
 
 #include "student_info.h"
+#include "grade.h"
 
-using std::istream; using std::vector;
+using namespace std;
 
 bool compare(const StudentInfo& x, const StudentInfo& y) {
     return x.name < y.name;
