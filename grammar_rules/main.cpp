@@ -31,10 +31,6 @@ Grammar read_grammar(istream& in) {
 int nrand(int n) {
     if (n <= 0 || n > RAND_MAX) {
         throw domain_error("argument to nrand is out of range");
-
-    // Avoiding divide by zero error that occurs when n is 1
-    } else if (n == 1) {
-        return 0;
     }
 
     const int bucket_size = RAND_MAX / n;
