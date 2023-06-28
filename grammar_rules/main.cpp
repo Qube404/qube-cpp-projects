@@ -29,11 +29,11 @@ Grammar read_grammar(istream& in) {
 }
 
 int nrand(int n) {
-    if (n <= 0 || n > RAND_MAX) {
+    if (n <= 0) {
         throw domain_error("argument to nrand is out of range");
     }
 
-    const int bucket_size = RAND_MAX / n;
+    const int bucket_size = INT64_MAX / n;
 
     int r;
     do {
