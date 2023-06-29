@@ -33,10 +33,11 @@ double optimistic_median(const StudentInfo& s) {
     }
 }
 
-double analyze_students(const vector<StudentInfo>& students, double transfunc(const StudentInfo&)) {
+template <class F>
+double analyze_students(const vector<StudentInfo>& students, F func(const StudentInfo&)) {
     vector<double> grades;
 
-    transform(students.begin(), students.end(), back_inserter(grades), transfunc);
+    transform(students.begin(), students.end(), back_inserter(grades), func);
 
     return median(grades);
 }
@@ -48,6 +49,6 @@ void write_analysis(
     const vector<StudentInfo>& did,
     const vector<StudentInfo>& didnt
 ) {
-    out << name << ": median(did) == " << analyze_students(did, transfunc) <<  
-                   ", median(didnt) == " << analyze_students(didnt, transfunc) << endl;
+    out << name << ": median(did) == " << analyze_students<double>(did, transfunc) <<  
+                   ", median(didnt) == " << analyze_students<double>(didnt, transfunc) << endl;
 }

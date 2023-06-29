@@ -8,7 +8,8 @@ double grade_aux(const StudentInfo&);
 double average_grade(const StudentInfo&);
 double optimistic_median(const StudentInfo&);
 
-double analyze_students(const std::vector<StudentInfo>&, double transfunc(const StudentInfo&));
+template <class F>
+double analyze_students(const std::vector<StudentInfo>&, F func(const StudentInfo&));
 
 void write_analysis(
     std::ostream&, 
