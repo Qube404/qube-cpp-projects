@@ -26,12 +26,11 @@ istream& read_hw(istream& in, vector<double>& hw) {
 
 istream& StudentInfo::read(istream& in) {
     in >> n >> midterm >> final; 
-    read_hw(in, homework);
-    return in;
-}
 
-double StudentInfo::grade() const {
-    return ::grade(midterm, final, homework);
+    read_hw(in, homework);
+    g = ::grade(midterm, final, homework);
+
+    return in;
 }
 
 bool compare(const StudentInfo& x, const StudentInfo& y) {
