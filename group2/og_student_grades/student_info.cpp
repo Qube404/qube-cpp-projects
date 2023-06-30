@@ -1,6 +1,6 @@
 #include "student_info.h"
 
-using std::istream; using std::vector;
+using namespace std;
 
 bool compare(const StudentInfo& x, const StudentInfo& y) {
     return x.name < y.name;
