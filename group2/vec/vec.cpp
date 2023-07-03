@@ -49,14 +49,6 @@ void Vec<T>::uncreate() {
 }
 
 template <class T>
-void Vec<T>::uncreate(const_iterator it) {
-    alloc.destroy(it);
-    alloc.deallocate(it);
-
-    avail--;
-}
-
-template <class T>
 void Vec<T>::grow() {
     size_type new_size = max(2 * (limit - data), ptrdiff_t(1));
 
@@ -76,28 +68,49 @@ void Vec<T>::unchecked_append(const T& val) {
 }
 
 template <class T>
-typename Vec<T>::const_iterator Vec<T>::erase(const_iterator i) {
+typename Vec<T>::const_iterator Vec<T>::erase(iterator i) {
     if (i > avail || i < data) {
         throw out_of_range("Beyond vector elements");
     }
 
-    uncreate(i);  
+    alloc.destroy(i);  
+    uninitialized_copy(i + 1, avail, i);
+    --avail;
+
     return avail;
 }
 
 template <class T>
-typename Vec<T>::const_iterator Vec<T>::erase(const_iterator i, const_iterator j) {
+typename Vec<T>::const_iterator Vec<T>::erase(iterator i, const_iterator j) {
     if (i > avail || i < data) {
         throw out_of_range("Beyond vector elements");
     }
 
+    const_iterator begin = i;
+
     while (i != j) {
-        uncreate(i);
+        alloc.destroy(i);
 
         i++;
     }
 
+    uninitialized_copy(j + 1, avail, begin);
+    avail -= j - i;
+
     return avail;
 }
 
+template <class T>
+void Vec<T>::clear() {
+    iterator it = avail;
+    while (it != data) {
+        alloc.destroy(--it);
+    }
+    
+    data = limit = avail = 0;
+}
 
+template <class T>
+bool Vec<T>::empty() const {
+    return avail == 0;
+}
