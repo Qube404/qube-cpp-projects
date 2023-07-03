@@ -2,6 +2,9 @@
 
 using namespace std;
 
+StudentInfo::StudentInfo(): midterm(0), final(0) {}
+StudentInfo::StudentInfo(istream& is) { read(is); }
+
 bool compare(const StudentInfo& x, const StudentInfo& y) {
     return x.name() < y.name();
 }

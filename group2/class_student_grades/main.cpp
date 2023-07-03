@@ -16,29 +16,23 @@ int main() {
     StudentInfo record;
     string::size_type maxlen = 0;
 
-    while (read(cin, record)) {
-        maxlen = max(maxlen, record.name.size());
+    while (record.read(cin)) {
+        maxlen = max(maxlen, record.name().size());
         students.push_back(record);
     }
-    
     sort(students.begin(), students.end(), compare);
-    
-    for (vector<StudentInfo>::size_type i = 0;
-         i != students.size(); i++) {
-        cout << students[i].name
-             << string(maxlen + 1 - students[i].name.size(), ' ');
+    for (vector<StudentInfo>::size_type i = 0; i != students.size(); ++i) {
+        cout << students[i].name()
+        << string(maxlen + 1 - students[i].name().size(), ' ');
 
         try {
-            string final_grade = letter_grade(students[i]);
+            double final_grade = students[i].grade();
             streamsize prec = cout.precision();
             cout << setprecision(3) << final_grade
-                 << setprecision(prec);
+            << setprecision(prec) << endl;
         } catch (domain_error e) {
-            cout << e.what();
+            cout << e.what() << endl;
         }
-
-        cout << endl;
     }
-
     return 0;
 }
