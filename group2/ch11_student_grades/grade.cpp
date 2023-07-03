@@ -18,12 +18,8 @@ double grade(double midterm, double final, const vector<double>& hw) {
     return grade(midterm, final, median(hw.begin(), hw.end()));
 }
 
-double grade(const StudentInfo& s) {
-    return grade(s.midterm, s.final, s.homework);
-}
-
 string letter_grade(const StudentInfo& s) {
-    double g = grade(s);
+    double g = s.grade();
 
     static const double numbers[] = {
         97, 94, 90, 87, 84, 80, 77, 74, 70, 60, 0
