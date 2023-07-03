@@ -1,9 +1,10 @@
 #ifndef GUARD_median_h
 #define GUARD_median_h
 
-#include <vector>
 #include <stdexcept>
 #include <algorithm>
+
+#include "vec.h"
 
 template <class In>
 double median(In begin, In end) {
@@ -11,14 +12,14 @@ double median(In begin, In end) {
         throw std::domain_error("median of an empty collection");
     }
 
-    std::vector<double> v;
+    Vec<double> v;
     while (begin != end) {
         v.push_back(*begin++);
     }
 
-    sort(v.begin(), v.end());
+    //sort(v.begin(), v.end());
 
-    typedef typename std::vector<double>::size_type vec_sz;
+    typedef typename Vec<double>::size_type vec_sz;
     vec_sz size = v.size();
     vec_sz mid = size / 2;
 

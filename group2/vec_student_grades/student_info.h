@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "vec.h"
+
 class StudentInfo {
 public:
     StudentInfo();
@@ -18,13 +20,12 @@ private:
     std::string n;
 
     double midterm, final;
-    std::vector<double> homework;
+    Vec<double> homework;
 
     int dest, cret, asi, cop;
 };
 
 bool compare(const StudentInfo&, const StudentInfo&);
-std::istream& read(std::istream&, StudentInfo&);
-std::istream& read_hw(std::istream&, std::vector<double>&);
+std::istream& read_hw(std::istream&, Vec<double>&);
 
 #endif

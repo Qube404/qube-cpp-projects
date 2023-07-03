@@ -8,6 +8,7 @@
 
 #include "grade.h"
 #include "student_info.h"
+#include "vec.h"
 
 using namespace std;
 

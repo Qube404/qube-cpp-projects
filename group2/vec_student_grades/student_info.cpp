@@ -1,4 +1,5 @@
 #include "student_info.h"
+#include "grade.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ bool compare(const StudentInfo& x, const StudentInfo& y) {
 istream& StudentInfo::read(istream& is) {
     is >> n >> midterm >> final;
 
-    read_hw(is, homework);
+    ::read_hw(is, homework);
     return is;
 }
 
@@ -29,4 +30,8 @@ istream& read_hw(istream& in, vector<double>& hw) {
     }
 
     return in;
+}
+
+double StudentInfo::grade() const {
+    return ::grade(midterm, final, homework);
 }

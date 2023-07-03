@@ -1,8 +1,8 @@
-#include <vector>
 #include <stdexcept>
 
 #include "grade.h"
 #include "median.h"
+#include "vec.h"
 
 using namespace std;
 
@@ -10,7 +10,7 @@ double grade(double midterm, double final, double homework) {
     return 0.2 * midterm + 0.4 * final + 0.4 * homework;
 }
 
-double grade(double midterm, double final, const vector<double>& hw) {
+double grade(double midterm, double final, const Vec<double>& hw) {
     if (hw.size() == 0) {
         throw domain_error("student has done no homework");
     }
@@ -18,12 +18,8 @@ double grade(double midterm, double final, const vector<double>& hw) {
     return grade(midterm, final, median(hw.begin(), hw.end()));
 }
 
-double grade(const StudentInfo& s) {
-    return grade(s.midterm, s.final, s.homework);
-}
-
 string letter_grade(const StudentInfo& s) {
-    double g = grade(s);
+    double g = s.grade();
 
     static const double numbers[] = {
         97, 94, 90, 87, 84, 80, 77, 74, 70, 60, 0

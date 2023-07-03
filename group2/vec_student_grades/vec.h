@@ -1,3 +1,6 @@
+#ifndef GUARD_vec
+#define GUARD_vec
+
 #include <cstddef>
 #include <memory>
 
@@ -10,7 +13,7 @@ public:
     typedef T value_type;
 
     Vec() { create(); }
-    explicit Vec(typename T::size_type n, const T& val = T()) { create(n, val); }
+    explicit Vec(size_t n, const T& val = T()) { create(n, val); }
     ~Vec() { uncreate(); }
 
     Vec(const Vec& v) { create(v.begin(), v.end()); }
@@ -35,8 +38,11 @@ public:
         unchecked_append(val);
     }
 
-    const_iterator erase(const_iterator);
-    const_iterator erase(const_iterator, const_iterator);
+    const_iterator erase(iterator);
+    const_iterator erase(iterator, const_iterator);
+
+    void clear();
+    bool empty() const;
 
 private:
     iterator data;
@@ -55,3 +61,5 @@ private:
     void grow();
     void unchecked_append(const T&);
 }; 
+
+#endif

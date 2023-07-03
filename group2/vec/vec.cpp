@@ -101,4 +101,3 @@ typename Vec<T>::const_iterator Vec<T>::erase(const_iterator i, const_iterator j
 }
 
 
-
