@@ -3,6 +3,8 @@
 
 #include <cstddef>
 #include <memory>
+#include <stdexcept>
+#include <iostream>
 
 template <class T>
 class Vec {
@@ -12,9 +14,9 @@ public:
     typedef size_t size_type;
     typedef T value_type;
 
-    Vec();
+    Vec(): data(0), avail(0), limit(0) { }
     explicit Vec(size_t n, const T& val = T()) { create(n, val); }
-    ~Vec();
+    ~Vec() { uncreate(); }
 
     Vec(const Vec& v) { create(v.begin(), v.end()); }
 
@@ -38,8 +40,8 @@ public:
         unchecked_append(val);
     }
 
-    const_iterator erase(iterator);
-    const_iterator erase(iterator, const_iterator);
+    iterator erase(iterator);
+    iterator erase(iterator, iterator);
 
     void clear();
     bool empty() const;
@@ -60,5 +62,109 @@ private:
     void grow();
     void unchecked_append(const T&);
 }; 
+
+template <class T>
+void Vec<T>::uncreate() {
+    if (data != 0) {
+        iterator it = avail;
+        while (it != data) {
+            alloc.destroy(--it);
+        }
+        
+        alloc.deallocate(data, limit - data);
+    }
+
+    data = limit = avail = 0;
+}
+
+template <class T>
+Vec<T>& Vec<T>::operator=(const Vec& rhs) {
+    if (&rhs != this) {
+        uncreate();
+
+        create(rhs.begin(), rhs.end());
+    }
+
+    return *this;
+}
+
+template <class T>
+void Vec<T>::create(size_type n, const T& val) {
+    data = alloc.allocate(n);
+    limit = avail = data + n;
+    std::uninitialized_fill(data, limit, val);
+}
+
+template <class T>
+void Vec<T>::create(const_iterator i, const_iterator j) {
+    data = alloc.allocate(j - i);
+    limit = avail = std::uninitialized_copy(i, j, data);
+}
+
+template <class T>
+void Vec<T>::grow() {
+    size_type new_size = std::max(2 * (limit - data), std::ptrdiff_t(1));
+
+    iterator new_data = alloc.allocate(new_size);
+    iterator new_avail = std::uninitialized_copy(data, avail, new_data);
+
+    uncreate();
+
+    data = new_data;
+    avail = new_avail;
+    limit = data + new_size;
+}
+
+template <class T>
+void Vec<T>::unchecked_append(const T& val) {
+    alloc.construct(avail++, val);
+}
+
+template <class T>
+typename Vec<T>::iterator Vec<T>::erase(iterator i) {
+    if (i > avail || i < data) {
+        throw std::out_of_range("Beyond vector elements");
+    }
+
+    alloc.destroy(i);
+    iterator it = std::uninitialized_copy(i + 1, avail, i);
+    alloc.destroy(it);
+    --avail;
+
+    return avail;
+}
+
+template <class T>
+typename Vec<T>::iterator Vec<T>::erase(iterator beg, iterator end) {
+    if (beg > avail || end < data || end > avail || end < data || end < beg) {
+        return end;
+    }
+
+    iterator iter = beg;
+    while (iter != end) {
+        //std::cout << *i;
+        alloc.destroy(iter);
+        iter++;
+    }
+
+    avail = std::uninitialized_copy(beg + 1, avail, end);
+
+    return avail;
+}
+
+template <class T>
+void Vec<T>::clear() {
+    iterator it = avail;
+    while (it != data) {
+        alloc.destroy(--it);
+    }
+    
+    data = limit = avail = 0;
+}
+
+template <class T>
+bool Vec<T>::empty() const {
+    return avail == 0;
+}
 
 #endif
