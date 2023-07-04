@@ -38,10 +38,9 @@ int main() {
     cout << endl << endl;
     */
 
-    v1.erase(v1.begin(), v1.begin() + 4);
+    v1.erase(v1.begin(), v1.end());
     cout << endl;
     println(v1);
-
 
     /*
     // Value init

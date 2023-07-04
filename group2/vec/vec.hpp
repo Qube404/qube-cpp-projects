@@ -141,13 +141,13 @@ typename Vec<T>::iterator Vec<T>::erase(iterator beg, iterator end) {
     }
 
     iterator iter = beg;
-    while (iter != end) {
+    while (iter != end - 1) {
         //std::cout << *i;
         alloc.destroy(iter);
-        iter++;
+        ++iter;
     }
 
-    avail = std::uninitialized_copy(beg + 1, avail, end);
+    avail = std::uninitialized_copy(end + 1, avail, beg);
 
     return avail;
 }
