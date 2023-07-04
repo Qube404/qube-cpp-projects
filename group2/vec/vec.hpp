@@ -136,18 +136,19 @@ typename Vec<T>::iterator Vec<T>::erase(iterator i) {
 
 template <class T>
 typename Vec<T>::iterator Vec<T>::erase(iterator beg, iterator end) {
-    if (beg > avail || end < data || end > avail || end < data || end < beg) {
+    iterator stop = end - 1;
+    if (beg > avail || stop < data || stop > avail || stop < data || stop < beg) {
         return end;
     }
 
     iterator iter = beg;
-    while (iter != end - 1) {
+    while (iter != stop) {
         //std::cout << *i;
         alloc.destroy(iter);
         ++iter;
     }
 
-    avail = std::uninitialized_copy(end + 1, avail, beg);
+    avail = std::uninitialized_copy(end, avail, beg);
 
     return avail;
 }

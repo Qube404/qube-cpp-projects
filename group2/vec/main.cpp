@@ -1,7 +1,7 @@
 #include <memory>
 #include <iostream>
 
-#include "vec.h"
+#include "vec.hpp"
 
 using namespace std;
 
@@ -25,27 +25,21 @@ int main() {
     v1.push_back(5);
     v1.push_back(6);
     v1.push_back(7);
-
     println(v1);
     cout << endl;
 
-    /*
-    cout << *(v1.begin()) << endl << endl;
     v1.erase(v1.begin());
     println(v1);
-    cout << endl << *(v1.begin());
-
-    cout << endl << endl;
-    */
-
-    v1.erase(v1.begin(), v1.end());
     cout << endl;
-    println(v1);
 
-    /*
+    v1.erase(v1.end() - 2, v1.end());
+    println(v1);
+    cout << endl;
+
     // Value init
     Vec<double> v2(4, 1.1);
-    //println(v2);
+    println(v2);
+    cout << endl;
 
     Vec<double> v3;
 
@@ -56,5 +50,4 @@ int main() {
 
     v3 = v2;
     cout << v2.size() << endl;
-    */
 }
