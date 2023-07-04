@@ -12,9 +12,9 @@ public:
     typedef size_t size_type;
     typedef T value_type;
 
-    Vec() { create(); }
+    Vec();
     explicit Vec(size_t n, const T& val = T()) { create(n, val); }
-    ~Vec() { uncreate(); }
+    ~Vec();
 
     Vec(const Vec& v) { create(v.begin(), v.end()); }
 
@@ -27,8 +27,8 @@ public:
     iterator begin() { return data; }
     const_iterator begin() const { return data; }
 
-    iterator end() { return limit; }
-    const_iterator end() const { return limit; }
+    iterator end() { return avail; }
+    const_iterator end() const { return avail; }
 
     void push_back(const T& val) {
         if (avail == limit) {
@@ -56,7 +56,6 @@ private:
     void create(const_iterator, const_iterator);
 
     void uncreate();
-    void uncreate(const_iterator);
 
     void grow();
     void unchecked_append(const T&);

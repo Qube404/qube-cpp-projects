@@ -6,19 +6,20 @@
 using namespace std;
 
 template <class T>
+Vec<T>::Vec(): data(0), avail(0), limit(0) { }
+
+template <class T>
+Vec<T>::~Vec() {
+    uncreate();
+}
+
+template <class T>
 Vec<T>& Vec<T>::operator=(const Vec& rhs) {
     if (&rhs != this) {
         uncreate();
 
         create(rhs.begin(), rhs.end());
     }
-    
-    return *this;
-}
-
-template <class T>
-void Vec<T>::create() {
-    data = avail = limit = 0;
 }
 
 template <class T>
