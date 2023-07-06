@@ -40,6 +40,8 @@ public:
         unchecked_append(val);
     }
 
+    iterator insert(size_type pos, iterator i, iterator j);
+
     iterator erase(iterator);
     iterator erase(iterator, iterator);
 
@@ -116,6 +118,30 @@ void Vec<T>::grow() {
 }
 
 template <class T>
+typename Vec<T>::iterator Vec<T>::insert(size_type index, iterator i, iterator j) {
+    iterator pos = data + index;
+    if (j < i) {
+        return data + index;
+    }
+
+    size_type iter_size = j - i; 
+    size_type init_size = size();
+    while ((init_size + iter_size) > size()) {
+        grow();
+    }
+
+    // Grow may change where data is located so need
+    // to re evaluate the position.
+    pos = data + index;
+    std::uninitialized_copy(pos, avail, pos + iter_size);
+    std::uninitialized_copy(i, j, pos);
+    
+    avail += iter_size;
+
+    return pos;
+}
+
+template <class T>
 void Vec<T>::unchecked_append(const T& val) {
     alloc.construct(avail++, val);
 }
@@ -143,7 +169,6 @@ typename Vec<T>::iterator Vec<T>::erase(iterator beg, iterator end) {
 
     iterator iter = beg;
     while (iter != stop) {
-        //std::cout << *i;
         alloc.destroy(iter);
         ++iter;
     }

@@ -25,29 +25,8 @@ int main() {
     v1.push_back(5);
     v1.push_back(6);
     v1.push_back(7);
+
+    Vec<double> v2(3, 9);
+    v1.insert(, v2.begin(), v2.end());
     println(v1);
-    cout << endl;
-
-    v1.erase(v1.begin());
-    println(v1);
-    cout << endl;
-
-    v1.erase(v1.end() - 2, v1.end());
-    println(v1);
-    cout << endl;
-
-    // Value init
-    Vec<double> v2(4, 1.1);
-    println(v2);
-    cout << endl;
-
-    Vec<double> v3;
-
-    allocator<Vec<double>> all;
-    
-    // Destructor test
-    all.destroy(&v2);
-
-    v3 = v2;
-    cout << v2.size() << endl;
 }
