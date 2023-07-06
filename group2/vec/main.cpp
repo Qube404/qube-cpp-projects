@@ -27,6 +27,11 @@ int main() {
     v1.push_back(7);
 
     Vec<double> v2(3, 9);
-    v1.insert(, v2.begin(), v2.end());
+    v1.insert(0, v2.begin(), v2.end());
     println(v1);
+
+    double a1[] = {9, 6, 9};
+    Vec<double> v3;
+    v3.assign(a1, 3);
+    println(v3);
 }

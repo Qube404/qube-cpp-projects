@@ -6,7 +6,8 @@
 using namespace std;
 
 int main() {
-    Str my_str = "My string";
+    char thing[] = {'1', '2'};
+    Str my_str = thing;
     cout << my_str << endl;
 
     char *my_chars = my_str.c_str();

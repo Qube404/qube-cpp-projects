@@ -23,9 +23,7 @@ public:
     }
 
     template <class In> 
-    Str(In b, In e) {
-        std::copy(b, e, std::back_inserter(data));
-    }
+    Str(In b, In e) { data(b, e); }
 
     Str& operator+=(const Str& s) {
         std::copy(s.data.begin(), s.data.end(), std::back_inserter(data));

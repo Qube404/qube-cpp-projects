@@ -20,6 +20,11 @@ public:
 
     Vec(const Vec& v) { create(v.begin(), v.end()); }
 
+    template <class In> 
+    Vec(In b, In e) {
+        std::copy(b, e, std::back_inserter(*this));
+    }
+
     size_type size() const { return limit - data; }
     T& operator[](size_type i) { return data[i]; }
     const T& operator[](size_type i) const { return data[i]; }
@@ -39,6 +44,8 @@ public:
 
         unchecked_append(val);
     }
+
+    iterator insert(const_iterator, iterator, iterator);
 
     iterator erase(iterator);
     iterator erase(iterator, iterator);
@@ -121,6 +128,21 @@ void Vec<T>::unchecked_append(const T& val) {
 }
 
 template <class T>
+typename Vec<T>::iterator Vec<T>::insert(const_iterator pos, iterator i, iterator j) {
+    if (j < i) {
+        return end;
+    }
+
+    size_type iter_size = j - i; 
+    while (size() + iter_size > limit) {
+        grow();
+    }
+
+    std::uninitialized_copy(pos, avail, avail);
+    std::uninitialized_copy(i, j, pos);
+}
+
+template <class T>
 typename Vec<T>::iterator Vec<T>::erase(iterator i) {
     if (i > avail || i < data) {
         throw std::out_of_range("Beyond vector elements");
@@ -143,7 +165,6 @@ typename Vec<T>::iterator Vec<T>::erase(iterator beg, iterator end) {
 
     iterator iter = beg;
     while (iter != stop) {
-        //std::cout << *i;
         alloc.destroy(iter);
         ++iter;
     }

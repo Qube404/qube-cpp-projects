@@ -2,6 +2,7 @@
 #define GUARD_vec
 
 #include <cstddef>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
 #include <iostream>
@@ -47,6 +48,8 @@ public:
 
     void clear();
     bool empty() const;
+
+    void assign(iterator, size_type);
 
 private:
     iterator data;
@@ -191,6 +194,12 @@ void Vec<T>::clear() {
 template <class T>
 bool Vec<T>::empty() const {
     return avail == 0;
+}
+
+template <class T>
+void Vec<T>::assign(iterator arr, size_type count) {
+    clear();
+    create(arr, arr + count);    
 }
 
 #endif
