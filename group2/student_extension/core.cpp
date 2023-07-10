@@ -5,19 +5,13 @@
 
 using namespace std;
 
-/*
-void Core::constructor_one() {
-    std::cerr << "Core::Core()" << std::endl;
+string Core::name() const { 
+    cerr << "Core::name()" << endl;
+    return n; 
 }
-
-void Core::constructor_two() {
-    std::cerr << "Core::Core(istream&)" << std::endl;
-}
-*/
-
-string Core::name() const { return n; }
 
 double Core::grade() const {
+    cerr << "Core::grade()" << endl;
     return ::grade(midterm, final, homework);
 }
 

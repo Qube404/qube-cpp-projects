@@ -13,9 +13,6 @@ public:
         read(is);
     }
 
-    //void constructor_one();
-    //void constructor_two();
-
     double grade() const;
     std::istream& read(std::istream&);
 

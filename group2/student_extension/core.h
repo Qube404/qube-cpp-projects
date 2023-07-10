@@ -9,17 +9,11 @@ class Core {
 friend class StudentInfo;
 
 public:
-    Core(): midterm(0), final(0) {
-        //constructor_one();
-    }
+    Core(): midterm(0), final(0) {}
 
     Core(std::istream& is) { 
         read(is); 
-        //constructor_two();
     }
-
-    //virtual void constructor_one();
-    //virtual void constructor_two();
 
     virtual ~Core() {}
 
