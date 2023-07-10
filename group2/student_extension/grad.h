@@ -8,7 +8,14 @@
 class Grad: public Core {
 public:
     Grad(): thesis(0) {}
-    Grad(std::istream& is) { read(is); }
+
+    Grad(std::istream& is) { 
+        read(is);
+    }
+
+    //void constructor_one();
+    //void constructor_two();
+
     double grade() const;
     std::istream& read(std::istream&);
 
