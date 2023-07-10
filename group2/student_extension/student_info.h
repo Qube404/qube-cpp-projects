@@ -31,6 +31,22 @@ public:
         }
     }
 
+    bool valid() const {
+        if (cop) {
+            return cop->valid();
+        } else {
+            return false;
+        }
+    }
+
+    std::string letter_grade() const {
+        if (cop) {
+            return cop->letter_grade();
+        } else {
+            throw std::runtime_error("unitialized Student");
+        }
+    }
+
     static bool compare(const StudentInfo& s1, const StudentInfo& s2) {
         return s1.name() < s2.name();
     }

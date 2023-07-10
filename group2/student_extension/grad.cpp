@@ -13,7 +13,6 @@ istream& Grad::read(istream& in) {
 }
 
 double Grad::grade() const {
-    cerr << "Grad::grade()" << endl;
     return min(Core::grade(), thesis);
 }
 
