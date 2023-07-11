@@ -22,12 +22,12 @@ public:
     virtual double grade() const;
     std::string letter_grade() const;
     bool valid() const;
+    virtual Core* clone() const { return new Core(*this); }
 
 protected:
     std::istream& read_common(std::istream&);
     double midterm, final;
     std::vector<double> homework;
-    virtual Core* clone() const { return new Core(*this); }
 
 private:
     std::string n;

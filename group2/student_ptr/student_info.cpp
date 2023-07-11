@@ -7,8 +7,6 @@
 using namespace std;
 
 istream& StudentInfo::read(istream& is) {
-    delete cop;
-
     char ch;
     is >> ch;
 
@@ -19,23 +17,4 @@ istream& StudentInfo::read(istream& is) {
     }
 
     return is;
-}
-
-StudentInfo::StudentInfo(const StudentInfo& s): cop(0) {
-    if (s.cop) {
-        cop = s.cop->clone();
-    } 
-}
-
-StudentInfo& StudentInfo::operator=(const StudentInfo& s) {
-    if (&s != this) {
-        delete cop;
-        if (s.cop) {
-            cop = s.cop->clone();
-        } else {
-            cop = 0;
-        }
-    }
-
-    return *this;
 }

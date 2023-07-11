@@ -1,17 +1,18 @@
+#ifndef GUARD_StudentInfo
+#define GUARD_StudentInfo
+
 #include <iostream>
 #include <istream>
 #include <stdexcept>
 #include <string>
 
 #include "core.h"
+#include "ptr.h"
 
 class StudentInfo {
 public:
-    StudentInfo(): cop(0) {}
-    StudentInfo(std::istream& is): cop(0) { read(is); }
-    StudentInfo(const StudentInfo&);
-    StudentInfo& operator=(const StudentInfo&);
-    ~StudentInfo() { delete cop; }
+    StudentInfo() {}
+    StudentInfo(std::istream& is) { read(is); }
 
     std::istream& read(std::istream&);
 
@@ -51,6 +52,21 @@ public:
         return s1.name() < s2.name();
     }
 
+    void regrade(double final, double thesis) {
+        cop.make_unique();
+
+        if (cop) {
+            // Does nothing for now since I haven't implemented regrade
+            // core and grad
+            //
+            //cop->regrade(final, thesis);
+        } else {
+            throw std::runtime_error("regrade of unknown Student");
+        }
+    }
+
 private:
-    Core *cop;
+    Ptr<Core> cop;
 };
+
+#endif
