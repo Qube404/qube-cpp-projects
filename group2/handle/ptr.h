@@ -5,6 +5,7 @@
 #include <stdexcept>
 
 #include "core.h"
+#include "vec.h"
 
 template <class T>
 class Ptr {
@@ -70,6 +71,14 @@ Ptr<T>::~Ptr() {
         delete p;
     }
 }
+
+template <class T>
+T* clone(const T* tp) {
+    return tp->clone();
+}
+
+template <>
+Vec<char>* clone(const Vec<char>*);
 
 bool compare_Core_ptrs(const Ptr<Core> c1, const Ptr<Core> c2);
 
