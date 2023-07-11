@@ -4,7 +4,7 @@
 #include <string>
 
 #include "core.h"
-#include "handle.h"
+#include "ptr.h"
 
 class StudentInfo {
 public:
@@ -49,6 +49,19 @@ public:
         return s1.name() < s2.name();
     }
 
+    void regrade(double final, double thesis) {
+        cop.make_unique();
+
+        if (cop) {
+            // Does nothing for now since I haven't implemented regrade
+            // core and grad
+            //
+            //cop->regrade(final, thesis);
+        } else {
+            throw std::runtime_error("regrade of unknown Student");
+        }
+    }
+
 private:
-    Handle<Core> cop;
+    Ptr<Core> cop;
 };
