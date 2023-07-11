@@ -1,3 +1,6 @@
+#ifndef GUARD_RefHandle
+#define GUARD_RefHandle
+
 #include <stddef.h>
 #include <stdexcept>
 
@@ -57,3 +60,5 @@ RefHandle<T>::~RefHandle() {
         delete p;
     }
 }
+
+#endif

@@ -79,8 +79,4 @@ T* clone(const T* tp) {
 template <>
 Vec<char>* clone(const Vec<char>*);
 
-bool compare(const Ptr<Core> c1, const Ptr<Core> c2);
-bool compare_Core_ptrs(const Ptr<Core> c1, const Ptr<Core> c2);
-
-
 #endif

@@ -1,5 +1,10 @@
+#ifndef GUARD_ptr
+#define GUARD_ptr
+
 #include <stddef.h>
 #include <stdexcept>
+
+#include "core.h"
 
 template <class T>
 class Ptr {
@@ -65,3 +70,7 @@ Ptr<T>::~Ptr() {
         delete p;
     }
 }
+
+bool compare_Core_ptrs(const Ptr<Core> c1, const Ptr<Core> c2);
+
+#endif

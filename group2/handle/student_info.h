@@ -1,3 +1,6 @@
+#ifndef GUARD_StudentInfo
+#define GUARD_StudentInfo
+
 #include <iostream>
 #include <istream>
 #include <stdexcept>
@@ -65,3 +68,5 @@ public:
 private:
     Ptr<Core> cop;
 };
+
+#endif

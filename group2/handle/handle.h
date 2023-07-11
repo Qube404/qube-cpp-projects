@@ -1,3 +1,6 @@
+#ifndef GUARD_handle
+#define GUARD_handle
+
 #include <stdexcept>
 
 #include "core.h"
@@ -54,3 +57,5 @@ T* Handle<T>::operator->() const {
 }
 
 bool compare_Core_handles(const Handle<Core> c1, const Handle<Core> c2);
+
+#endif
