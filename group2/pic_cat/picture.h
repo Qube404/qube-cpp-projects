@@ -15,8 +15,8 @@ class Picture;
 
 class PicBase {
 friend std::ostream& operator<<(std::ostream&, const Picture&);
-friend Picture reframe(const Picture&, char, char, char);
 friend class FramePic;
+friend class ReframePic;
 friend class HCatPic;
 friend class VCatPic;
 friend class StringPic;
@@ -30,13 +30,9 @@ private:
     virtual ht_sz height() const = 0;
     virtual void display(std::ostream&, ht_sz, bool) const = 0;
 
-    std::vector<str_sz> ci;
-    std::vector<str_sz> fi;
-    std::vector<str_sz> si;
-
-    char c = '*';
-    char f = '*';
-    char s = '*';
+    char *c = new char('*');
+    char *f = new char('*');
+    char *s = new char('*');
 
 protected:
     static void pad(std::ostream& os, wd_sz beg, wd_sz end);
@@ -87,18 +83,45 @@ private:
 class FramePic: public PicBase {
 friend Picture frame(const Picture&);
 friend Picture frame(const Picture&, char, char, char);
-friend Picture reframe(const Picture&, char, char, char);
 
 private:
     Ptr<PicBase> p;
 
-    FramePic(const Ptr<PicBase>& pic): p(pic) {}
-
-    FramePic(const Ptr<PicBase>& pic, char c, char f, char s): p(pic) {
-        pic->c = c;
-        pic->f = f;
-        pic->s = s;
+    FramePic(const Ptr<PicBase>& pic): p(pic) {
+        c = p->c;
+        s = p->s;
+        f = p->f;
     }
+
+    FramePic(const Ptr<PicBase>& pic, char ct, char ft, char st): p(pic) {
+        c = p->c;
+        s = p->s;
+        f = p->f;
+    }
+
+    wd_sz width() const { return p->width() + 4; }
+    ht_sz height() const { return p->height() + 4;}
+    void display(std::ostream&, ht_sz, bool) const;
+};
+
+// ---------------------------------------------------------------------- //
+
+class ReframePic: public PicBase {
+friend Picture reframe(const Picture &, char, char, char);
+
+private:
+    Ptr<PicBase> p;
+
+    ReframePic(const Ptr<PicBase>& pic, char ct, char ft, char st): p(pic) {
+        c = p->c;
+        s = p->s;
+        f = p->f;
+
+        *p->s = st;
+        *p->f = ft;
+        *p->c = ct;
+    }
+
 
     wd_sz width() const { return p->width() + 4; }
     ht_sz height() const { return p->height() + 4;}
@@ -112,7 +135,15 @@ friend Picture vcat(const Picture&, const Picture&);
 
 private:
     Ptr<PicBase> top, bottom;
-    VCatPic(const Ptr<PicBase>& t, const Ptr<PicBase>& b): top(t), bottom(b) {}
+    VCatPic(const Ptr<PicBase>& t, const Ptr<PicBase>& b): top(t), bottom(b) {
+        c = t->c;
+        s = t->s;
+        f = t->f;
+        
+        b->c = c;
+        b->s = s;
+        b->f = f;
+    }
 
     wd_sz width() const { return std::max(top->width(), bottom->width()); }
     ht_sz height() const { return top->height() + bottom->height(); }
@@ -126,7 +157,15 @@ friend Picture hcat(const Picture&, const Picture&);
 
 private:
     Ptr<PicBase> left, right;
-    HCatPic(const Ptr<PicBase>& l, const Ptr<PicBase>& r): left(l), right(r) {}
+    HCatPic(const Ptr<PicBase>& l, const Ptr<PicBase>& r): left(l), right(r) {
+        c = l->c;
+        s = l->s;
+        f = l->f;
+        
+        r->c = c;
+        r->s = s;
+        r->f = f;
+    }
 
     wd_sz width() const { return left->width() + right->width(); }
     ht_sz height() const { return std::max(left->height(), right->height()); }

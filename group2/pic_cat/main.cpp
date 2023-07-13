@@ -16,8 +16,8 @@ int main() {
     Picture q = frame(p);
     Picture r = hcat(p, q);
     Picture s = vcat(q, r);
-    Picture t = vcat(q, q);
+    Picture t = vcat(r, s);
     Picture u = frame(t);
 
-    cout << reframe(frame(p), 'A', '=', '!') << endl;
+    cout << reframe(frame(u), 'A', '=', '!') << endl;
 }

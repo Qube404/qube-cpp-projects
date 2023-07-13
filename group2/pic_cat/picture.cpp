@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 
 #include "picture.h"
 
@@ -20,11 +21,7 @@ Picture frame(const Picture& pic, char c, char f, char s) {
 }
 
 Picture reframe(const Picture& pic, char c, char f, char s) {
-    Picture mpic = pic;
-    mpic.p->c = c;
-    mpic.p->f = f;
-    mpic.p->s = s;
-    return mpic;
+    return new ReframePic(pic.p, c, f, s);
 }
 
 Picture hcat(const Picture& l, const Picture& r) {
@@ -97,15 +94,19 @@ void FramePic::display(ostream& os, ht_sz line, bool do_pad) const {
         }
     } else {
         if (line == 0 || line == height() - 1) {
-            os << c << string(width() - 2, f) << c;
+            os << *c << string(width() - 2, *f) << *c;
         } else if (line == 1 || line == height() - 2) {
-            os << s;
+            os << *s;
             pad(os, 1, width() - 1);
-            os << s;
+            os << *s;
         } else {
-            os << s << ' ';
+            os << *s << ' ';
             p->display(os, line - 2, true);
-            os << ' ' << s;
+            os << ' ' << *s;
         }
     }
+}
+
+void ReframePic::display(ostream& os, ht_sz line, bool do_pad) const {
+    p->display(os, line, do_pad);
 }
