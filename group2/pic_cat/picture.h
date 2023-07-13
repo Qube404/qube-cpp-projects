@@ -2,6 +2,7 @@
 #define GUARD_picture_h
 
 #include <algorithm>
+#include <iterator>
 #include <ostream>
 #include <vector>
 #include <string>
@@ -24,6 +25,8 @@ private:
     typedef std::string::size_type wd_sz;
     typedef std::string::size_type str_sz;
 
+    typedef std::vector<str_sz> row;
+
     virtual wd_sz width() const = 0;
     virtual ht_sz height() const = 0;
     virtual void display(std::ostream&, ht_sz, bool) const = 0;
@@ -31,6 +34,8 @@ private:
     std::vector<str_sz> ci;
     std::vector<str_sz> fi;
     std::vector<str_sz> si;
+
+    std::vector<row> rows;
 
 protected:
     static void pad(std::ostream& os, wd_sz beg, wd_sz end);
@@ -67,7 +72,9 @@ friend class Picture;
 
 private:
     std::vector<std::string> data;    
-    StringPic(const std::vector<std::string>& v): data(v) {}
+    StringPic(const std::vector<std::string>& v): data(v) {
+        rows.push_back(row());
+    }
 
     wd_sz width() const;
     ht_sz height() const { return data.size(); }
@@ -87,8 +94,19 @@ private:
     char f = '*';
     char s = '*';
 
-    FramePic(const Ptr<PicBase>& pic): p(pic) {}
-    FramePic(const Ptr<PicBase>& pic, char c, char f, char s): p(pic), c(c), f(f), s(s) {}
+    FramePic(const Ptr<PicBase>& pic): p(pic) {
+        rows.insert(rows.begin(), row());
+        rows.insert(rows.begin(), row());
+        rows.insert(rows.end(), row());
+        rows.insert(rows.end(), row());
+    }
+
+    FramePic(const Ptr<PicBase>& pic, char c, char f, char s): p(pic), c(c), f(f), s(s) {
+        rows.insert(rows.begin(), row());
+        rows.insert(rows.begin(), row());
+        rows.insert(rows.end(), row());
+        rows.insert(rows.end(), row());
+    }
 
     wd_sz width() const { return p->width() + 4; }
     ht_sz height() const { return p->height() + 4;}
@@ -102,7 +120,10 @@ friend Picture vcat(const Picture&, const Picture&);
 
 private:
     Ptr<PicBase> top, bottom;
-    VCatPic(const Ptr<PicBase>& t, const Ptr<PicBase>& b): top(t), bottom(b) {}
+    VCatPic(const Ptr<PicBase>& t, const Ptr<PicBase>& b): top(t), bottom(b) {
+        rows.insert(rows.end(), t->rows.begin(), t->rows.end());
+        rows.insert(rows.end(), b->rows.begin(), b->rows.end());
+    }
 
     wd_sz width() const { return std::max(top->width(), bottom->width()); }
     ht_sz height() const { return top->height() + bottom->height(); }
@@ -116,7 +137,17 @@ friend Picture hcat(const Picture&, const Picture&);
 
 private:
     Ptr<PicBase> left, right;
-    HCatPic(const Ptr<PicBase>& l, const Ptr<PicBase>& r): left(l), right(r) {}
+    HCatPic(const Ptr<PicBase>& l, const Ptr<PicBase>& r): left(l), right(r) {
+        rows.insert(rows.end(), l->rows.begin(), l->rows.end());
+
+        for (std::vector<row>::size_type i = 0; i != r->rows.size(); i++) {
+            if (i > rows.size()) {
+                rows.push_back(row());
+            } 
+
+            rows[i].insert(rows[i].end(), r->rows[i].begin(), r->rows[i].end());
+        }
+    }
 
     wd_sz width() const { return left->width() + right->width(); }
     ht_sz height() const { return std::max(left->height(), right->height()); }
