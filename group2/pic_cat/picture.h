@@ -15,6 +15,7 @@ class Picture;
 
 class PicBase {
 friend std::ostream& operator<<(std::ostream&, const Picture&);
+friend Picture reframe(const Picture&, char, char, char);
 friend class FramePic;
 friend class HCatPic;
 friend class VCatPic;
@@ -33,6 +34,10 @@ private:
     std::vector<str_sz> fi;
     std::vector<str_sz> si;
 
+    char c = '*';
+    char f = '*';
+    char s = '*';
+
 protected:
     static void pad(std::ostream& os, wd_sz beg, wd_sz end);
 };
@@ -42,6 +47,7 @@ protected:
 class Picture {
 friend Picture frame(const Picture&);
 friend Picture frame(const Picture&, char, char, char);
+friend Picture reframe(const Picture&, char, char, char);
 friend Picture hcat(const Picture&, const Picture&);
 friend Picture vcat(const Picture&, const Picture&);
 friend std::ostream& operator<<(std::ostream&, const Picture&);
@@ -57,6 +63,7 @@ private:
 
 Picture frame(const Picture&);
 Picture frame(const Picture&, char, char, char);
+Picture reframe(const Picture&, char, char, char);
 Picture hcat(const Picture&, const Picture&);
 Picture vcat(const Picture&, const Picture&);
 std::ostream& operator<<(std::ostream&, const Picture&);
@@ -80,17 +87,18 @@ private:
 class FramePic: public PicBase {
 friend Picture frame(const Picture&);
 friend Picture frame(const Picture&, char, char, char);
+friend Picture reframe(const Picture&, char, char, char);
 
 private:
     Ptr<PicBase> p;
 
-    char c = '*';
-    char f = '*';
-    char s = '*';
-
     FramePic(const Ptr<PicBase>& pic): p(pic) {}
 
-    FramePic(const Ptr<PicBase>& pic, char c, char f, char s): p(pic), c(c), f(f), s(s) {}
+    FramePic(const Ptr<PicBase>& pic, char c, char f, char s): p(pic) {
+        pic->c = c;
+        pic->f = f;
+        pic->s = s;
+    }
 
     wd_sz width() const { return p->width() + 4; }
     ht_sz height() const { return p->height() + 4;}

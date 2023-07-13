@@ -19,5 +19,5 @@ int main() {
     Picture t = vcat(q, q);
     Picture u = frame(t);
 
-    cout << frame(hcat(s, vcat(r, q)), '+', '-', '|') << endl;
+    cout << reframe(frame(p), 'A', '=', '!') << endl;
 }

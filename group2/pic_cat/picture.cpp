@@ -19,6 +19,14 @@ Picture frame(const Picture& pic, char c, char f, char s) {
     return new FramePic(pic.p, c, f, s);
 }
 
+Picture reframe(const Picture& pic, char c, char f, char s) {
+    Picture mpic = pic;
+    mpic.p->c = c;
+    mpic.p->f = f;
+    mpic.p->s = s;
+    return mpic;
+}
+
 Picture hcat(const Picture& l, const Picture& r) {
     return new HCatPic(l.p, r.p);
 }
