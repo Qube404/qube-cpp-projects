@@ -82,23 +82,21 @@ void HCatPic::display(ostream& os, ht_sz row, bool do_pad) const {
     right->display(os, row, do_pad);
 }
 
-void FramePic::display(ostream& os, ht_sz row, bool do_pad) const {
-    str_sz i = 0;
-
-    if (row >= height()) {
+void FramePic::display(ostream& os, ht_sz line, bool do_pad) const {
+    if (line >= height()) {
         if (do_pad) {
             pad(os, 0, width());
         }
     } else {
-        if (row == 0 || row == height() - 1) {
+        if (line == 0 || line == height() - 1) {
             os << c << string(width() - 2, f) << c;
-        } else if (row == 1 || row == height() - 2) {
+        } else if (line == 1 || line == height() - 2) {
             os << s;
             pad(os, 1, width() - 1);
             os << s;
         } else {
             os << s << ' ';
-            p->display(os, row - 2, true);
+            p->display(os, line - 2, true);
             os << ' ' << s;
         }
     }
