@@ -15,6 +15,10 @@ Picture frame(const Picture& pic) {
     return new FramePic(pic.p);
 }
 
+Picture frame(const Picture& pic, char c, char f, char s) {
+    return new FramePic(pic.p, c, f, s);
+}
+
 Picture hcat(const Picture& l, const Picture& r) {
     return new HCatPic(l.p, r.p);
 }
@@ -27,6 +31,7 @@ Picture::Picture(const vector<string>& v): p(new StringPic(v)) {}
 
 std::ostream& operator<<(std::ostream& os, const Picture& picture) {
     const PicBase::ht_sz ht = picture.p->height();
+
     for (PicBase::ht_sz i = 0; i != ht; i++) {
         picture.p->display(os, i, false);
         os << endl;
@@ -78,21 +83,23 @@ void HCatPic::display(ostream& os, ht_sz row, bool do_pad) const {
 }
 
 void FramePic::display(ostream& os, ht_sz row, bool do_pad) const {
+    str_sz i = 0;
+
     if (row >= height()) {
         if (do_pad) {
             pad(os, 0, width());
         }
     } else {
         if (row == 0 || row == height() - 1) {
-            os << string(width(), '*');
+            os << c << string(width() - 2, f) << c;
         } else if (row == 1 || row == height() - 2) {
-            os << '*';
+            os << s;
             pad(os, 1, width() - 1);
-            os << '*';
+            os << s;
         } else {
-            os << "* ";
+            os << s << ' ';
             p->display(os, row - 2, true);
-            os << " *";
+            os << ' ' << s;
         }
     }
 }

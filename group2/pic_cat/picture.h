@@ -22,10 +22,15 @@ friend class StringPic;
 private:
     typedef std::vector<std::string>::size_type ht_sz;
     typedef std::string::size_type wd_sz;
+    typedef std::string::size_type str_sz;
 
     virtual wd_sz width() const = 0;
     virtual ht_sz height() const = 0;
     virtual void display(std::ostream&, ht_sz, bool) const = 0;
+
+    std::vector<str_sz> ci;
+    std::vector<str_sz> fi;
+    std::vector<str_sz> si;
 
 protected:
     static void pad(std::ostream& os, wd_sz beg, wd_sz end);
@@ -35,6 +40,7 @@ protected:
 
 class Picture {
 friend Picture frame(const Picture&);
+friend Picture frame(const Picture&, char, char, char);
 friend Picture hcat(const Picture&, const Picture&);
 friend Picture vcat(const Picture&, const Picture&);
 friend std::ostream& operator<<(std::ostream&, const Picture&);
@@ -49,6 +55,7 @@ private:
 
 
 Picture frame(const Picture&);
+Picture frame(const Picture&, char, char, char);
 Picture hcat(const Picture&, const Picture&);
 Picture vcat(const Picture&, const Picture&);
 std::ostream& operator<<(std::ostream&, const Picture&);
@@ -71,10 +78,17 @@ private:
 
 class FramePic: public PicBase {
 friend Picture frame(const Picture&);
+friend Picture frame(const Picture&, char, char, char);
 
 private:
     Ptr<PicBase> p;
+
+    char c = '*';
+    char f = '*';
+    char s = '*';
+
     FramePic(const Ptr<PicBase>& pic): p(pic) {}
+    FramePic(const Ptr<PicBase>& pic, char c, char f, char s): p(pic), c(c), f(f), s(s) {}
 
     wd_sz width() const { return p->width() + 4; }
     ht_sz height() const { return p->height() + 4;}
